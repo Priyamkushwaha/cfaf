@@ -14,17 +14,19 @@ class CampaignShow extends Component {
 
     return {
       address: props.query.address,
-      minimumContribution: summary[0],
-      balance: summary[1],
-      requestsCount: summary[2],
-      approversCount: summary[3],
-      manager: summary[4],
+      organiserName: summary[0],
+      minimumContribution: summary[1],
+      balance: summary[2],
+      requestsCount: summary[3],
+      approversCount: summary[4],
+      manager: summary[5]
     };
   }
 
   renderCards() {
     const {
       balance,
+      organiserName,
       manager,
       minimumContribution,
       requestsCount,
@@ -33,8 +35,8 @@ class CampaignShow extends Component {
 
     const items = [
       {
-        header: manager,
-        meta: "Address of Manager",
+        header: organiserName,
+        meta: `Address of Manager: ${manager}`,
         description:
           "The manager created this campaign and can create requests to withdraw money",
         style: { overflowWrap: "break-word" },

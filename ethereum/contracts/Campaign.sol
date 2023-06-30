@@ -3,14 +3,23 @@
 pragma solidity ^0.8.9;
 
 contract CampaignFactory {
-    address payable[] public deployedCampaigns;
-
-    function createCampaign(uint minimum) public {
-        address newCampaign = address(new Campaign(minimum, msg.sender));
-        deployedCampaigns.push(payable(newCampaign));
+    struct DeployedCampaigns {
+        string name;
+        string description;
+        address payable location;
     }
 
-    function getDeployedCampaigns() public view returns (address payable[] memory) {
+    DeployedCampaigns[] public deployedCampaigns;
+
+    function createCampaign(uint minimum,string memory name,string memory description, string memory managerName) public {
+        address newCampaign = address(new Campaign(minimum, msg.sender, managerName));
+        DeployedCampaigns storage newDeployedCampaign = deployedCampaigns.push();
+        newDeployedCampaign.name = name;
+        newDeployedCampaign.description = description;
+        newDeployedCampaign.location = payable(newCampaign);
+    }
+
+    function getDeployedCampaigns() public view returns (DeployedCampaigns[] memory) {
         return deployedCampaigns;
     }
 }
@@ -27,6 +36,7 @@ contract Campaign {
 
     Request[] public requests;
     address public manager;
+    string public managerName;
     uint public minimumContribution;
     mapping(address => bool) public approvers;
     uint public approversCount;
@@ -36,9 +46,10 @@ contract Campaign {
         _;
     }
 
-    constructor (uint minimum, address creator) {
+    constructor (uint minimum, address creator, string memory name) {
         manager = creator;
         minimumContribution = minimum;
+        managerName = name;
     }
 
     function contribute() public payable {
@@ -78,9 +89,10 @@ contract Campaign {
     }
     
     function getSummary() public view returns (
-      uint, uint, uint, uint, address
+      string memory, uint, uint, uint, uint, address
       ) {
         return (
+          managerName,  
           minimumContribution,
           address(this).balance,
           requests.length,
