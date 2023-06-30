@@ -2,10 +2,16 @@ import React from "react";
 import { Container } from "semantic-ui-react";
 import Head from "next/head";
 import Header from "./Header";
-
 const Layout = (props) => {
   return (
-    <div>
+    <div style={{
+      background: "-webkit-linear-gradient(to right, #99f2c8, #1f4037)",
+      background: "linear-gradient(to right, #99f2c8, #1f4037)",
+      backgroundSize: "cover",
+      backgroundRepeat: "repeat",
+      backgroundPosition: "center",
+      height: "150vh"
+    }}>
       <Container>
         <Head>
           <link

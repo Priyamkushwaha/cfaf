@@ -4,7 +4,7 @@ import { Link } from "../routes";
 
 const Header = () => {
   return (
-    <Menu style={{ marginTop: "10px" }}>
+    <Menu >
       <Link route="/">
         <a className="item">CFAF</a>
       </Link>
